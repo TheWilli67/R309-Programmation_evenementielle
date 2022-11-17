@@ -1,0 +1,10 @@
+• TimeoutError
+• Comme son nom l’indique
+• Connec(onRefusedError
+• Comme son nom l’indique
+• socket.gaierror
+• Nom de l’hôte invalide
+• Connec(onResetError
+• Connexion interrompue abruptement (sans close à RST PACKET)
+• BrokenPipeError
+• Rupture de connexion avec le serveur (perte de réseau, ^C, …) à signal
