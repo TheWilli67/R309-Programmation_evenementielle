@@ -32,7 +32,7 @@ def reception(conn):
             except (ConnectionResetError, ConnectionAbortedError, EOFError):
                 print("[!] L'hôte s'est déconnecté . .. ...")
             if data == 'os':
-                systeme_exploitation = platform.uname()
+                systeme_exploitation = print(platform.uname())
                 conn.send(systeme_exploitation.encode())
 
 
