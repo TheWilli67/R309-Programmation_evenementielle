@@ -1,10 +1,10 @@
 import socket
 import threading
 import sys
-import os
+import platform
 
 
-def reply(conn, reception):
+def reply(conn):
     while True:
         reply = input('[+] ')
         conn.send(reply.encode())
@@ -24,7 +24,7 @@ def reply(conn, reception):
                 
 
 
-def reception(conn,reply):
+def reception(conn):
         while True:
             try:
                 data = conn.recv(1024).decode()
@@ -32,8 +32,8 @@ def reception(conn,reply):
             except (ConnectionResetError, ConnectionAbortedError, EOFError):
                 print("[!] L'hôte s'est déconnecté . .. ...")
             if data == 'os':
-                systeme_exploitation = os.name
-                if systeme_exploitation == 'nt':
+                systeme_exploitation = platform.uname()
+                conn.send(systeme_exploitation.encode())
 
 
 if __name__ == '__main__':
@@ -43,9 +43,9 @@ if __name__ == '__main__':
     server_socket.listen(1)
     conn, address = server_socket.accept()
     try:
-        task_reply = threading.Thread(target=reply, args=[conn,reply])
+        task_reply = threading.Thread(target=reply, args=[conn])
         task_reply.start()
-        task_reception = threading.Thread(target=reception, args=[conn,reception])
+        task_reception = threading.Thread(target=reception, args=[conn])
         task_reception.start()
     except (ConnectionResetError, ConnectionAbortedError, EOFError):
         print("[!] L'hôte s'est déconnecté . .. ...")
