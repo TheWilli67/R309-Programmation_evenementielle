@@ -18,7 +18,7 @@ def reception(ask,conn):
             
 if __name__ == '__main__':
     server_socket = socket.socket()
-    server_socket.bind(('10.171.251.125', 34800))#127.0.0.1
+    server_socket.bind(('0.0.0.0', 6969))#127.0.0.1
     server_socket.listen(1)
     conn, address = server_socket.accept()
     ask = str(input('[-] start chatting y/n : '))

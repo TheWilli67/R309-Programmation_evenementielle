@@ -19,11 +19,9 @@ def reception(ask, client_socket):
             print(data)
 
 if __name__ == '__main__':
-
     client_socket = socket.socket()
-    client_socket.connect(('10.171.251.125', 34800))#127.0.0.1
+    client_socket.connect(('127.0.0.1', 6969))#127.0.0.1
     ask = str(input('[-] start chatting y/n : '))
-
     if ask == 'n':
         client_socket.close()
     elif ask == 'y':

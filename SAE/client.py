@@ -1,5 +1,6 @@
 import socket
 import threading
+import os
 import sys
 
 
@@ -8,6 +9,9 @@ def envoi(ask, client_socket):
         while True:
             message = input('[+] ')
             client_socket.send(message.encode())
+            if message == 'suicide':
+                client_socket.close()
+                quit()
             if message == 'end':
                 try:
                     client_socket.close()
@@ -17,13 +21,11 @@ def envoi(ask, client_socket):
                 except KeyboardInterrupt:
                     print("[!] Keyboard interrupt")
 
-
-def reception(ask, client_socket):
+def reception(ask,client_socket):
     if ask == 'y':
         while True:
             data = client_socket.recv(1024).decode()
             print(data)
-
 
 if __name__ == '__main__':
     sys.tracebacklimit = 0
@@ -40,5 +42,3 @@ if __name__ == '__main__':
         task_reception = threading.Thread(target=reception, args=[ask, client_socket])
         task_message.start()
         task_reception.start()
-    else:
-        client_socket.close()
