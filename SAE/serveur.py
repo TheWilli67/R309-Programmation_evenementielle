@@ -3,6 +3,7 @@ import threading
 import platform
 import psutil
 import os
+import re
 
 def reply(conn):
     while True:
@@ -14,6 +15,7 @@ def reception(conn, server_socket, systeme_exploit):
     while True:
         data = conn.recv(1024).decode()
         print(data)
+        data_split = data.split()[0]
         if data == 'os':
             uname = str(platform.uname().system)
             conn.send(uname.encode())
@@ -38,7 +40,7 @@ def reception(conn, server_socket, systeme_exploit):
         if data == 'kill':
             server_socket.close()
             quit()
-        if systeme_exploit =='Windows':
+        if systeme_exploit =='windows':
             try:
                 if data == 'dir':
                     commande = os.popen("dir").read()
@@ -46,8 +48,13 @@ def reception(conn, server_socket, systeme_exploit):
                     conn.send(commande.encode())
             except:
                 pass
-        if data == 'ping':
-            ipaddr = '1.1.1.1'
+        if systeme_exploit =='Windows':
+            if data_split == 'mkdir':
+                dossier = data.split()[1]
+                os.popen(f"mkdir {dossier}")
+                
+        if data_split == 'ping':
+            ipaddr = data.split()[1]
             pinging = os.popen(f"ping {ipaddr}"). read()
             print(pinging)
             conn.send(pinging.encode())
@@ -61,11 +68,15 @@ def reception(conn, server_socket, systeme_exploit):
                     conn.send(output.encode())
             except:
                 pass
+        if data_split == ('powershell' or'Powershell' or 'powershell.exe'):
+            ps_data = os.popen(f"{data}")
+            conn.send(ps_data.encode())
+            
 
 if __name__ == '__main__':
     #sys.tracebacklimit = 0
     server_socket = socket.socket()
-    systeme_exploit = str(platform.uname().system)
+    systeme_exploit = str(platform.uname().system.lower())
     hostname = socket.gethostname()
     ipaddr = socket.gethostbyname(hostname)
     print(f" OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}")
