@@ -10,7 +10,7 @@ def envoi(ask, client_socket):
             message = input('[+] ')
             client_socket.send(message.encode())
             if message == 'help':
-                print("Command usable during server connection: \n os : Display what os is running on the server \n whoami : get IP address \n name : get hostname \n cpu : get CPU percentage after 3s \n ram : get percentage of ram used \n resume : display ip and hostname \n kill : shutdown the server connection \n ping : ping the @IP wanted \n dir : show directory list \n mkdir : create a directory \n python --version : display python version currently installed \n get-process : Powershell command that display all the current running process \n wmic --help : display url of a wmic help \n powershell --help : display url of Microsoft powershell doc")
+                print("Command usable during server connection: \n os -> Display what os is running on the server \n ip -> get IP address \n name -> get hostname \n cpu -> get CPU percentage after 3s \n ram -> get percentage of ram used \n resume -> display ip and hostname \n kill -> shutdown the server connection \n ping -> ping the @IP wanted \n python --version -> display python version currently installed \n get-process -> Powershell command that display all the current running process \n dos: -> all working commands on Windows \n linux:  -> all working commands on Linux \n MacOS: -> all working commands on MacOS")
             if message == 'suicide':
                 client_socket.close()
                 quit()
