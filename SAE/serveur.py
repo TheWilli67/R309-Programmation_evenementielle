@@ -3,8 +3,6 @@ import threading
 import platform
 import psutil
 import os
-import subprocess
-
 
 def reply(conn):
     while True:
@@ -17,8 +15,6 @@ def reception(conn, server_socket, systeme_exploit):
         data = conn.recv(1024).decode()
         print(data)
         data_split = data.split()[0]
-        phrase_size = len(data.split(' '))
-        print(f'cmd :{phrase_size} words')
         
         if data == 'os':
             uname = str(platform.uname().system)
@@ -88,29 +84,28 @@ def reception(conn, server_socket, systeme_exploit):
             conn.send(helping.encode())
             
         if data == 'powershell --help':
-            helpin_ps: 'https://learn.microsoft.com/fr-fr/powershell/'
+            helpin_ps = 'https://learn.microsoft.com/fr-fr/powershell/'
             conn.send(helpin_ps.encode())
             
-        if data_split == 'powershell.exe':
-            commande_ps = data.split()[1-(phrase_size-1)]
-            print(commande_ps)
-            ps_data = os.popen(
-                f'wmic {commande_ps}').read()
+        if data_split == ('powershell' or 'powershell.exe'):
+            ps_data = os.popen(f'{data}').read()
             conn.send(ps_data.encode())
             
         if systeme_exploit == 'Linux':
-            if data == 'ls -la'
+            if data == 'ls -la':
                 ls_la = os.popen('ls -la')
                 conn.send(ls_la.encode())
 
 if __name__ == '__main__':
     #sys.tracebacklimit = 0
     server_socket = socket.socket()
-    systeme_exploit = str(platform.uname().system.lower())
     hostname = socket.gethostname()
     ipaddr = socket.gethostbyname(hostname)
+    server_socket.bind((ipaddr, 1111))  # 127.0.0.1
+    systeme_exploit = str(platform.uname().system.lower())
     print(f" OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}")
-    server_socket.bind(('0.0.0.0', 6969))  # 127.0.0.1
+
+    
     while True:
         server_socket.listen(1)
         conn, address = server_socket.accept()
