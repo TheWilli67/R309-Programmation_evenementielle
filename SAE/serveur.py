@@ -3,35 +3,44 @@ import threading
 import platform
 import psutil
 import os
-import re
+import subprocess
+
 
 def reply(conn):
     while True:
         reply = input('[+] ')
         conn.send(reply.encode())
-        
+
 
 def reception(conn, server_socket, systeme_exploit):
     while True:
         data = conn.recv(1024).decode()
         print(data)
         data_split = data.split()[0]
+        phrase_size = len(data.split(' '))
+        print(f'cmd :{phrase_size} words')
+        
         if data == 'os':
             uname = str(platform.uname().system)
             conn.send(uname.encode())
+            
         if data == 'whoami':
             hostname = socket.gethostname()
             ipaddr = socket.gethostbyname(hostname)
             conn.send(ipaddr.encode())
+            
         if data == 'name':
             hostname = socket.gethostname()
             conn.send(hostname.encode())
+            
         if data == 'cpu':  # fonctionne pas !
             cpu = str(f"{psutil.cpu_percent(3)} %")
             conn.send(cpu.encode())
+            
         if data == 'ram':  # fonctionne pas !
             ram = str(f"{psutil.virtual_memory()[2]} %")
             conn.send(ram.encode())
+            
         if data == 'resume':
             hostname = socket.gethostname()
             ipaddr = socket.gethostbyname(hostname)
@@ -40,7 +49,8 @@ def reception(conn, server_socket, systeme_exploit):
         if data == 'kill':
             server_socket.close()
             quit()
-        if systeme_exploit =='windows':
+            
+        if systeme_exploit == 'windows':
             try:
                 if data == 'dir':
                     commande = os.popen("dir").read()
@@ -48,30 +58,50 @@ def reception(conn, server_socket, systeme_exploit):
                     conn.send(commande.encode())
             except:
                 pass
-        if systeme_exploit =='Windows':
+            
+        if systeme_exploit == 'Windows':
             if data_split == 'mkdir':
                 dossier = data.split()[1]
                 os.popen(f"mkdir {dossier}")
-                
+
         if data_split == 'ping':
             ipaddr = data.split()[1]
             pinging = os.popen(f"ping {ipaddr}"). read()
             print(pinging)
             conn.send(pinging.encode())
+            
         if data == 'python --version':
             version = os.popen(f'python --version').read()
             conn.send(version.encode())
-        if systeme_exploit =='Windows':
+            
+        if systeme_exploit == 'Windows':
             try:
                 if data == 'get-process':
-                    output = os.popen('wmic process get description, processid').read()
+                    output = os.popen(
+                        'wmic process get description, processid').read()
                     conn.send(output.encode())
             except:
                 pass
-        if data_split == ('powershell' or'Powershell' or 'powershell.exe'):
-            ps_data = os.popen(f"{data}")
+            
+        if data == 'wmic --help':
+            helping = 'https://ss64.com/nt/wmic.html'
+            conn.send(helping.encode())
+            
+        if data == 'powershell --help':
+            helpin_ps: 'https://learn.microsoft.com/fr-fr/powershell/'
+            conn.send(helpin_ps.encode())
+            
+        if data_split == 'powershell.exe':
+            commande_ps = data.split()[1-(phrase_size-1)]
+            print(commande_ps)
+            ps_data = os.popen(
+                f'wmic {commande_ps}').read()
             conn.send(ps_data.encode())
             
+        if systeme_exploit == 'Linux':
+            if data == 'ls -la'
+                ls_la = os.popen('ls -la')
+                conn.send(ls_la.encode())
 
 if __name__ == '__main__':
     #sys.tracebacklimit = 0
