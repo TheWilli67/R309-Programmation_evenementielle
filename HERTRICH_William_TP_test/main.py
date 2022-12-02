@@ -1,3 +1,9 @@
+########################################################################
+# lien Github :
+# https://github.com/TheWilli67/R309-Programmation_evenementielle/tree/main/HERTRICH_William_TP_test
+########################################################################
+
+
 import sys
 import time
 import multiprocessing
