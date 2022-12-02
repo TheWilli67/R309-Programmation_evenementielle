@@ -3,14 +3,13 @@ from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QToolBar,   QChe
 widgets = [
     QCheckBox,
     QComboBox,
-    QDateEdit,
     QDateTimeEdit,
     QDial,
     QDoubleSpinBox,
     QFontComboBox,
     QLCDNumber,
     QLabel,
-    QLineEdit,
+    QLineEdit, ##############
     QProgressBar,
     QPushButton,
     QRadioButton,
