@@ -65,7 +65,7 @@ def reception(conn, server_socket, systeme_exploit,ipaddr):
                     print(task)
                     conn.send(task.encode())
                 else:
-                    fail = f"tu  t'est trompé tu est sous {systeme_exploit} cette commande n'est pas disponible"
+                    fail = f"tu t'est trompé tu est sous {systeme_exploit} cette commande n'est pas disponible"
                     conn.send(fail.encode())
         except:
             pass
@@ -77,7 +77,7 @@ def reception(conn, server_socket, systeme_exploit,ipaddr):
                     print(task)
                     conn.send(task.encode())
                 else:
-                    fail = f"tu  t'est trompé tu est sous {systeme_exploit} cette commande n'est pas disponible"
+                    fail = f"tu t'est trompé tu est sous {systeme_exploit} cette commande n'est pas disponible"
                     conn.send(fail.encode())
         except:
             pass
@@ -97,7 +97,7 @@ def reception(conn, server_socket, systeme_exploit,ipaddr):
                 output = os.popen('wmic process get description, processid').read()
                 conn.send(output.encode())
             else:
-                fail = f"tu  t'est trompé tu est sous {systeme_exploit} cette commande n'est pas disponible"
+                fail = f"tu t'est trompé tu est sous {systeme_exploit} cette commande n'est pas disponible"
                 conn.send(fail.encode())
         
         if data_split == ('powershell' or 'powershell.exe'):
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     ipaddr = socket.gethostbyname(hostname)
     server_socket.bind((ipaddr, 6969))  # 127.0.0.1
     systeme_exploit = str(platform.uname().system.lower())
-    print(f" OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}")
+    print(f"\n OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}")
 
     
     while True:
