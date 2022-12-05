@@ -23,7 +23,6 @@ def envoi(ask, client_socket):
                 except KeyboardInterrupt:
                     print("[!] Keyboard interrupt")
 
-
 def reception(ask, client_socket):
     if ask == 'y':
         while True:

@@ -108,7 +108,7 @@ if __name__ == '__main__':
     #sys.tracebacklimit = 0
     server_socket = socket.socket()
     hostname = socket.gethostname()
-    ipaddr = '10.171.251.82'  # socket.gethostbyname(hostname)
+    ipaddr = socket.gethostbyname(hostname)
     server_socket.bind((ipaddr, 6969))  # 127.0.0.1
     systeme_exploit = str(platform.uname().system.lower())
     print(f" OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}")
