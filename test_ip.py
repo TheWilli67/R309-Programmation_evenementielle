@@ -1,7 +1,4 @@
-import csv 
-
-with open('egg.csv', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=';', quotechar='|')
-    for row in spamreader:
-        print(', '.join(row))
-    
+   
+data = str('egg.csv')
+test = data.split(';')[1]
+print(test)
