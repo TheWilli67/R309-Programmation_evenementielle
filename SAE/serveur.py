@@ -1,3 +1,4 @@
+# coding: utf-8
 import socket
 import threading
 import platform
@@ -112,7 +113,6 @@ if __name__ == '__main__':
     server_socket.bind((ipaddr, 6969))  # 127.0.0.1
     systeme_exploit = str(platform.uname().system.lower())
     print(f"\n OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}")
-
     
     while True:
         server_socket.listen(1)
