@@ -119,7 +119,7 @@ if __name__ == '__main__':
     print(f"\n OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}\n Port : {portask}")
 
     while True:
-        server_socket.listen(0)
+        server_socket.listen(10)
         conn, address = server_socket.accept()
         try:
             task_reply = threading.Thread(target=reply, args=[conn])

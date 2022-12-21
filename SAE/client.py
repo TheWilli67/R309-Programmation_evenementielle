@@ -1,7 +1,7 @@
 # coding: utf-8
 import socket
 import threading
-import os
+import platform
 import sys
 
 
@@ -24,7 +24,8 @@ def envoi(ask, client_socket):
                 except KeyboardInterrupt:
                     print("[!] Keyboard interrupt")
 
-def reception(ask, client_socket):
+
+def reception(ask, client_socket, systeme_exploit):
     if ask == 'y':
         while True:
             data = client_socket.recv(1024).decode()
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     ip_ask = str(input('Destination IP : '))
     port_ask = int(input('Port associé : '))
     client_socket.connect((ip_ask, port_ask))
+    systeme_exploit = str(platform.uname().system.lower())
     ask = str(input('[-] connect to server y/n : '))
     print("[?] type help")
 
@@ -46,6 +48,6 @@ if __name__ == '__main__':
         task_message = threading.Thread(
             target=envoi, args=[ask, client_socket])
         task_reception = threading.Thread(
-            target=reception, args=[ask, client_socket])
+            target=reception, args=[ask, client_socket, systeme_exploit])
         task_message.start()
         task_reception.start()
