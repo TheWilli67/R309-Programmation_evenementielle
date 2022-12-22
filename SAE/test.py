@@ -1,5 +1,12 @@
-import os
+import csv
 
-data ='dos:ping 8.8.8.8'
-data1 = data.split(':')[1]
-print((f'dos:{data1}'))
+liste_ip = ['127.0.0.1']
+liste_port = ['6969']
+liste_al = []
+
+with open("./test.csv") as file:
+  csvreader = csv.reader(file, delimiter=';')
+  for row in csvreader:
+    print(row)
+    
+print(liste_al)
