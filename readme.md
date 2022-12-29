@@ -8,3 +8,5 @@ When the file is opened you just have to precise what port do you want to connec
 
 then you just have to open the client type the IP of the server and type down the port associated
 and then you'r free to command your server
+
+you are free to use the .exe files they work either very well (but they are still only command line)

